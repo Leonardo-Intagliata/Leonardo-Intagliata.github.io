@@ -1,0 +1,25 @@
+@import "tailwindcss";
+
+/* Il sito usa sempre il tema scuro: le classi dark: si attivano con class="dark" su <html> */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Sfondo del sito: un velo scuro leggero per la leggibilità + l'immagine ripetuta in verticale.
+   sfondo-onde.webp è l'immagine originale seguita dalla sua copia capovolta,
+   così ripetendosi non mostra mai una giunzione (scorrimento infinito). */
+body {
+	background-color: #020617;
+	background-image:
+		linear-gradient(rgb(2 6 23 / 0.4), rgb(2 6 23 / 0.4)),
+		url('/sfondo-onde.webp');
+	background-repeat: no-repeat, repeat-y;
+	/* Telefono: l'immagine resta alta e si vede la parte centrale */
+	background-size: 100% 100%, auto 1600px;
+	background-position: center top;
+}
+
+/* Da tablet in su: l'immagine occupa tutta la larghezza */
+@media (min-width: 768px) {
+	body {
+		background-size: 100% 100%, 100% auto;
+	}
+}

@@ -1,23 +1,36 @@
+---
+import '../styles/global.css';
+import Sidebar from '../components/Sidebar.astro';
+import { profilo } from '../data/profilo';
+
+// Ogni pagina può passare il proprio titolo e la propria descrizione
+interface Props {
+	title?: string;
+	description?: string;
+}
+const {
+	title = `${profilo.nome} · ${profilo.ruolo}`,
+	description = `Portfolio di ${profilo.nome}: progetti in Python, supporto IT e cloud.`,
+} = Astro.props;
+---
+
 <!doctype html>
-<html lang="en">
+<html lang="it" class="dark">
 	<head>
 		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="description" content={description} />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2" />
+		<link rel="icon" href="/favicon.ico?v=2" sizes="32x32" />
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png?v=2" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
+		<title>{title}</title>
 	</head>
-	<body>
-		<slot />
+	<body class="text-slate-900 antialiased dark:text-slate-100">
+		<Sidebar />
+		<!-- Spazio per la barra: a sinistra da tablet in su, in basso su telefono -->
+		<div class="pb-20 md:pb-0 md:pl-16">
+			<slot />
+		</div>
 	</body>
 </html>
-
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
-</style>

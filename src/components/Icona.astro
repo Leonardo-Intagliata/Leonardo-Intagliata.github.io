@@ -1,0 +1,21 @@
+---
+// Disegna un'icona a contorno partendo dai tracciati SVG
+interface Props {
+	tracciati: string[];
+	class?: string;
+}
+const { tracciati, class: classe = 'h-6 w-6' } = Astro.props;
+---
+
+<svg
+	class={classe}
+	viewBox="0 0 24 24"
+	fill="none"
+	stroke="currentColor"
+	stroke-width="1.75"
+	stroke-linecap="round"
+	stroke-linejoin="round"
+	aria-hidden="true"
+>
+	{tracciati.map((d) => <path d={d} />)}
+</svg>

@@ -1,0 +1,73 @@
+---
+// Contenuto della pagina "Chi sono": racconto, riepilogo e percorso.
+// Modifica liberamente i testi.
+const inBreve = [
+	{ etichetta: 'Dove', valore: 'Milano · disponibile anche da remoto' },
+	{ etichetta: 'Studio', valore: 'Laurea in Informatica per le aziende digitali (L-31), Università Pegaso · in corso' },
+	{ etichetta: 'Diploma', valore: 'Tecnico Nautico, Istituto A. Rizza (2020)' },
+	{ etichetta: 'Lingue', valore: 'Italiano madrelingua · Inglese B1' },
+];
+
+// Il percorso, dal più recente al più vecchio
+const percorso = [
+	{ periodo: '2026', titolo: 'Primi progetti personali', testo: 'Questo sito portfolio e un progetto privato di analisi dei mercati finanziari in Python.' },
+	{ periodo: 'In corso', titolo: 'Laurea in Informatica per le aziende digitali', testo: 'Università Telematica Pegaso.' },
+	{ periodo: '2025 – oggi', titolo: 'Milano · Pam Panorama', testo: 'Operatore di supermercato e cassa.' },
+	{ periodo: '2024 – 2025', titolo: 'Veneto · industria e immobiliare', testo: 'EssilorLuxottica (reparto riparazioni), RE/MAX Casamia, Hydro Extrusion Italy (controllo qualità).' },
+	{ periodo: '2021 – 2022', titolo: 'Sicilia · primi lavori', testo: 'Cameriere, apprendista panettiere, volontario al front office per CISL Scuola.' },
+	{ periodo: '2015 – 2020', titolo: 'Diploma di Tecnico Nautico', testo: 'Istituto Superiore A. Rizza, Trasporti e Logistica.' },
+];
+---
+
+<section class="mx-auto max-w-5xl px-4 pb-16 sm:px-6">
+	<div class="grid gap-12 md:grid-cols-[3fr_2fr]">
+		<!-- Racconto -->
+		<div class="space-y-5 text-lg leading-relaxed text-slate-300">
+			<p>
+				Vengo da Augusta, in Sicilia, e oggi vivo a Milano. Dopo il diploma da Tecnico Nautico ho
+				lavorato in settori molto diversi: ristorazione, panificazione, occhialeria in
+				EssilorLuxottica, immobiliare, metalmeccanica e grande distribuzione.
+			</p>
+			<p>
+				Lungo la strada ho capito che quello che mi appassiona davvero è l'informatica. Oggi studio
+				Informatica per le aziende digitali e nel tempo libero costruisco progetti in Python, tra cui
+				un progetto privato di analisi dei mercati finanziari.
+			</p>
+			<p>
+				Dai lavori che ho fatto porto precisione e attenzione ai dettagli, l'abitudine a lavorare
+				in squadra e sotto pressione e la capacità di adattarmi in fretta. Cerco un primo ruolo in
+				un'azienda IT dove crescere tra supporto tecnico, sviluppo e cloud.
+			</p>
+		</div>
+
+		<!-- In breve -->
+		<aside class="h-fit rounded-xl border border-slate-800 bg-slate-900/70 p-6 backdrop-blur-sm">
+			<h2 class="text-sm font-semibold tracking-wider text-slate-400 uppercase">In breve</h2>
+			<dl class="mt-4 space-y-4">
+				{
+					inBreve.map((voce) => (
+						<div>
+							<dt class="text-sm font-semibold">{voce.etichetta}</dt>
+							<dd class="mt-0.5 text-slate-300">{voce.valore}</dd>
+						</div>
+					))
+				}
+			</dl>
+		</aside>
+	</div>
+
+	<!-- Percorso -->
+	<h2 class="mt-20 text-2xl font-bold tracking-tight sm:text-3xl">Il mio percorso</h2>
+	<ol class="mt-8 space-y-8 border-l border-slate-700 pl-6">
+		{
+			percorso.map((tappa) => (
+				<li class="relative">
+					<span class="absolute top-1.5 -left-[31px] h-3 w-3 rounded-full border-2 border-blue-500 bg-slate-950" aria-hidden="true" />
+					<p class="text-sm font-semibold text-blue-400">{tappa.periodo}</p>
+					<h3 class="mt-1 text-lg font-semibold">{tappa.titolo}</h3>
+					<p class="mt-1 text-slate-300">{tappa.testo}</p>
+				</li>
+			))
+		}
+	</ol>
+</section>

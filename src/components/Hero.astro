@@ -1,0 +1,122 @@
+---
+import { Image } from 'astro:assets';
+import fotoProfilo from '../assets/foto-profilo.jpg';
+import { profilo } from '../data/profilo';
+
+// Testi e link della Hero: modifica solo questi valori
+const nome = 'Leonardo Intagliata';
+const ruolo = `${profilo.ruolo} · ${profilo.competenzeChiave}`;
+const frase =
+	'Sviluppo progetti in Python tra dati e automazione, mi occupo di supporto IT, dalla configurazione delle postazioni al troubleshooting, e mi sto formando sul cloud con Azure.';
+const disponibilita = 'Disponibile con 20 giorni di preavviso · Milano / remoto';
+
+const links = {
+	github: profilo.github,
+	linkedin: profilo.linkedin,
+	email: profilo.email,
+};
+---
+
+<section id="home" class="px-4 pt-12 pb-24 sm:px-6 md:pt-20">
+	<div class="mx-auto grid w-full max-w-5xl gap-10 md:grid-cols-[260px_1fr] md:gap-12 lg:grid-cols-[320px_1fr]">
+		<!-- Foto: su mobile sta sopra (4:5); da tablet in su è a sinistra
+		     e si allunga esattamente quanto la colonna di testo (dal badge ai link). -->
+		<div
+			class="relative mx-auto aspect-[4/5] w-full max-w-sm overflow-hidden rounded-2xl shadow-2xl ring-1 shadow-blue-950/60 ring-blue-500/30 md:mx-0 md:aspect-auto md:max-w-none"
+		>
+			<Image
+				src={fotoProfilo}
+				alt={`Foto di ${nome}`}
+				widths={[400, 700, 1000]}
+				sizes="(min-width: 1024px) 320px, (min-width: 768px) 260px, 384px"
+				loading="eager"
+				class="absolute inset-0 h-full w-full object-cover object-[50%_25%]"
+			/>
+		</div>
+
+		<!-- Colonna testo -->
+		<div>
+			<p
+				class="inline-flex items-center gap-2 rounded-full border border-emerald-600/30 bg-emerald-50 px-3 py-1 text-sm font-medium text-emerald-800 dark:border-emerald-400/30 dark:bg-emerald-950 dark:text-emerald-300"
+			>
+				<span class="h-2 w-2 rounded-full bg-emerald-500" aria-hidden="true"></span>
+				{disponibilita}
+			</p>
+
+			<h1 class="mt-6 text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">{nome}</h1>
+
+			<p class="mt-3 text-xl font-medium text-blue-700 sm:text-2xl dark:text-blue-400">{ruolo}</p>
+
+			<p class="mt-6 max-w-xl text-lg leading-relaxed text-slate-600 dark:text-slate-300">
+				{frase}
+			</p>
+
+			<div class="mt-8 flex flex-wrap gap-3">
+				<a
+					href="/lavori"
+					class="rounded-lg bg-blue-700 px-5 py-3 font-semibold text-white transition-colors hover:bg-blue-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700"
+				>
+					Guarda i progetti
+				</a>
+				<a
+					href="/cv.pdf"
+					download
+					class="rounded-lg border border-slate-300 px-5 py-3 font-semibold transition-colors hover:bg-slate-100 dark:border-slate-700 dark:hover:bg-slate-800"
+				>
+					Scarica CV (PDF)
+				</a>
+			</div>
+
+			<ul class="relative mt-8 flex flex-wrap gap-6 text-sm font-medium text-slate-600 dark:text-slate-400">
+				<li>
+					<a href={links.github} target="_blank" rel="noopener" class="underline-offset-4 hover:text-blue-700 hover:underline dark:hover:text-blue-400">GitHub</a>
+				</li>
+				<li>
+					<a href={links.linkedin} target="_blank" rel="noopener" class="underline-offset-4 hover:text-blue-700 hover:underline dark:hover:text-blue-400">LinkedIn</a>
+				</li>
+				<li>
+					<!-- Email: un clic apre un riquadro con l'indirizzo e il tasto Copia -->
+					<details id="email-box">
+						<summary
+							class="cursor-pointer list-none underline-offset-4 hover:text-blue-700 hover:underline dark:hover:text-blue-400 [&::-webkit-details-marker]:hidden"
+						>
+							Email
+						</summary>
+						<div
+							class="absolute top-full left-0 z-10 mt-3 flex max-w-full items-center gap-3 rounded-lg border border-slate-200 bg-white p-3 shadow-lg dark:border-slate-700 dark:bg-slate-900"
+						>
+							<span class="break-all text-slate-900 select-all dark:text-slate-100">{links.email}</span>
+							<button
+								type="button"
+								data-copy={links.email}
+								class="shrink-0 rounded-md bg-blue-700 px-3 py-1.5 font-semibold text-white transition-colors hover:bg-blue-800"
+							>
+								Copia
+							</button>
+						</div>
+					</details>
+				</li>
+			</ul>
+		</div>
+	</div>
+</section>
+
+<script>
+	// Tasto "Copia": copia l'email negli appunti e conferma per 2 secondi
+	document.querySelectorAll<HTMLButtonElement>('[data-copy]').forEach((btn) => {
+		btn.addEventListener('click', async () => {
+			await navigator.clipboard.writeText(btn.dataset.copy ?? '');
+			btn.textContent = 'Copiata!';
+			setTimeout(() => (btn.textContent = 'Copia'), 2000);
+		});
+	});
+
+	// Chiude il riquadro cliccando fuori o premendo Esc
+	const emailBox = document.querySelector<HTMLDetailsElement>('#email-box');
+	document.addEventListener('click', (e) => {
+		if (emailBox?.open && !emailBox.contains(e.target as Node)) emailBox.open = false;
+	});
+	document.addEventListener('keydown', (e) => {
+		if (e.key === 'Escape' && emailBox) emailBox.open = false;
+	});
+</script>

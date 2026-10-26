@@ -1,0 +1,52 @@
+---
+// Barra di navigazione.
+// Da tablet in su: barra sottile a sinistra che si allarga al passaggio del mouse.
+// Su telefono: barra fissa in basso con icone ed etichette.
+import Icona from './Icona.astro';
+import { navigazione, profilo } from '../data/profilo';
+
+// Pagina corrente, per evidenziare la voce attiva ("/lavori/" e "/lavori" sono la stessa)
+const corrente = Astro.url.pathname.replace(/\/$/, '') || '/';
+---
+
+<nav
+	aria-label="Navigazione principale"
+	class="group fixed inset-x-0 bottom-0 z-50 overflow-hidden border-t border-slate-800 bg-slate-950/90 backdrop-blur-md md:inset-y-0 md:right-auto md:w-16 md:border-t-0 md:border-r md:transition-[width] md:duration-200 md:hover:w-56 md:focus-within:w-56"
+>
+	<!-- Logo: solo da tablet in su -->
+	<a href="/" class="hidden h-20 items-center gap-3 px-3 md:flex" aria-label="Torna alla home">
+		<img src="/favicon.svg?v=2" alt="" class="h-10 w-10 shrink-0" />
+		<span
+			class="font-semibold whitespace-nowrap opacity-0 transition-opacity group-focus-within:opacity-100 group-hover:opacity-100"
+		>
+			{profilo.nome}
+		</span>
+	</a>
+
+	<ul class="flex justify-around md:flex-col md:justify-start md:gap-1 md:px-2">
+		{
+			navigazione.map((voce) => {
+				const attiva = corrente === voce.href;
+				return (
+					<li>
+						<a
+							href={voce.href}
+							aria-current={attiva ? 'page' : undefined}
+							class:list={[
+								'flex flex-col items-center gap-1 px-2 py-2 text-[11px] font-medium transition-colors md:flex-row md:gap-3 md:rounded-lg md:px-3 md:py-2.5 md:text-sm',
+								attiva
+									? 'text-blue-400 md:bg-blue-500/15'
+									: 'text-slate-400 hover:text-white md:hover:bg-slate-800/70',
+							]}
+						>
+							<Icona tracciati={voce.icona} class="h-6 w-6 shrink-0" />
+							<span class="md:whitespace-nowrap md:opacity-0 md:transition-opacity md:group-focus-within:opacity-100 md:group-hover:opacity-100">
+								{voce.label}
+							</span>
+						</a>
+					</li>
+				);
+			})
+		}
+	</ul>
+</nav>

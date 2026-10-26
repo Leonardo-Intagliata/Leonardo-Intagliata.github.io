@@ -1,0 +1,85 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import EmailCopy from '../components/EmailCopy.astro';
+import { profilo } from '../data/profilo';
+
+// Domande frequenti: TESTI DA RIVEDERE, sono solo una base di partenza
+const domande = [
+	{
+		domanda: 'Che tipo di ruolo stai cercando?',
+		risposta: 'Un primo ruolo junior in ambito IT: supporto tecnico, sviluppo software, dati o cloud. Trovi i dettagli nella pagina CV.',
+	},
+	{
+		domanda: 'Lavori su progetti anche fuori dall\'università?',
+		risposta: 'Sì: nel tempo libero sviluppo progetti in Python, che trovi nella pagina Lavori.',
+	},
+	{
+		domanda: 'Sei disponibile per lavoro da remoto o ibrido?',
+		risposta: 'Sì. Vivo a Milano e valuto ruoli in sede, ibridi o da remoto.',
+	},
+	{
+		domanda: 'Come riesci a conciliare studio e lavoro?',
+		risposta: 'L\'università è telematica, quindi organizzo lo studio in modo flessibile intorno agli orari di lavoro.',
+	},
+];
+
+const oggetto = encodeURIComponent('Domanda dal tuo portfolio');
+---
+
+<Layout title="Contatti · Leonardo Intagliata">
+	<main>
+		<PageHeader titolo="Contatti" sottotitolo="Scrivimi per un colloquio, una collaborazione o anche solo una domanda." />
+
+		<section class="mx-auto grid max-w-5xl gap-6 px-4 sm:px-6 md:grid-cols-3">
+			<div class="rounded-xl border border-slate-800 bg-slate-900/70 p-6 backdrop-blur-sm md:col-span-2">
+				<h2 class="text-sm font-semibold tracking-wider text-slate-400 uppercase">Email</h2>
+				<div class="mt-3"><EmailCopy /></div>
+				<p class="mt-3 text-sm text-slate-400">Rispondo di solito entro 24 ore.</p>
+			</div>
+			<div class="rounded-xl border border-slate-800 bg-slate-900/70 p-6 backdrop-blur-sm">
+				<h2 class="text-sm font-semibold tracking-wider text-slate-400 uppercase">Dove</h2>
+				<p class="mt-3 text-slate-100">{profilo.citta} · anche da remoto</p>
+			</div>
+			<a href={profilo.linkedin} target="_blank" rel="noopener" class="rounded-xl border border-slate-800 bg-slate-900/70 p-6 backdrop-blur-sm transition-colors hover:border-blue-500/60">
+				<h2 class="text-sm font-semibold tracking-wider text-slate-400 uppercase">LinkedIn</h2>
+				<p class="mt-3 font-semibold text-blue-400">Vai al profilo →</p>
+			</a>
+			<a href={profilo.github} target="_blank" rel="noopener" class="rounded-xl border border-slate-800 bg-slate-900/70 p-6 backdrop-blur-sm transition-colors hover:border-blue-500/60">
+				<h2 class="text-sm font-semibold tracking-wider text-slate-400 uppercase">GitHub</h2>
+				<p class="mt-3 font-semibold text-blue-400">Guarda il codice →</p>
+			</a>
+			<a href="/cv" class="rounded-xl border border-slate-800 bg-slate-900/70 p-6 backdrop-blur-sm transition-colors hover:border-blue-500/60">
+				<h2 class="text-sm font-semibold tracking-wider text-slate-400 uppercase">Curriculum</h2>
+				<p class="mt-3 font-semibold text-blue-400">Leggi o scarica il CV →</p>
+			</a>
+		</section>
+
+		<section class="mx-auto max-w-5xl px-4 pt-16 pb-16 sm:px-6">
+			<h2 class="text-2xl font-bold tracking-tight sm:text-3xl">Domande frequenti</h2>
+			<div class="mt-6 divide-y divide-slate-800 rounded-xl border border-slate-800 bg-slate-900/70 backdrop-blur-sm">
+				{
+					domande.map((d) => (
+						<details class="group px-6 py-4">
+							<summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-semibold [&::-webkit-details-marker]:hidden">
+								{d.domanda}
+								<span class="text-xl text-blue-400 transition-transform group-open:rotate-45" aria-hidden="true">+</span>
+							</summary>
+							<p class="mt-3 leading-relaxed text-slate-300">{d.risposta}</p>
+						</details>
+					))
+				}
+			</div>
+
+			<div class="mt-8 flex flex-col items-start gap-4 rounded-xl border border-blue-500/30 bg-blue-950/40 p-6 sm:flex-row sm:items-center sm:justify-between">
+				<div>
+					<h3 class="font-semibold">Hai un'altra domanda?</h3>
+					<p class="mt-1 text-slate-300">Scrivimi: le domande più frequenti finiranno qui sopra.</p>
+				</div>
+				<a href={`mailto:${profilo.email}?subject=${oggetto}`} class="shrink-0 rounded-lg bg-blue-700 px-5 py-3 font-semibold text-white transition-colors hover:bg-blue-800">
+					Fai una domanda
+				</a>
+			</div>
+		</section>
+	</main>
+</Layout>

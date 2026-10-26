@@ -1,0 +1,25 @@
+---
+// Email sempre visibile con il tasto "Copia"
+import { profilo } from '../data/profilo';
+---
+
+<div class="flex flex-wrap items-center gap-3">
+	<span class="break-all text-slate-100 select-all">{profilo.email}</span>
+	<button
+		type="button"
+		data-copia-email={profilo.email}
+		class="shrink-0 rounded-md bg-blue-700 px-3 py-1.5 text-sm font-semibold text-white transition-colors hover:bg-blue-800"
+	>
+		Copia
+	</button>
+</div>
+
+<script>
+	document.querySelectorAll<HTMLButtonElement>('[data-copia-email]').forEach((btn) => {
+		btn.addEventListener('click', async () => {
+			await navigator.clipboard.writeText(btn.dataset.copiaEmail ?? '');
+			btn.textContent = 'Copiata!';
+			setTimeout(() => (btn.textContent = 'Copia'), 2000);
+		});
+	});
+</script>

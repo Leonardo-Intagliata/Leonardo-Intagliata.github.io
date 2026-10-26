@@ -1,0 +1,50 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import { profilo } from '../data/profilo';
+
+// Cosa cerco: TESTI DA RIVEDERE
+const cosaCerco = [
+	{ etichetta: 'Ruolo', valore: 'Primo ruolo junior in ambito IT: supporto tecnico, sviluppo software, dati o cloud.' },
+	{ etichetta: 'Contratto', valore: 'Stage, apprendistato o primo impiego.' },
+	{ etichetta: 'Dove', valore: 'Milano, in sede, ibrido o da remoto.' },
+	{ etichetta: 'Cosa offro', valore: 'Voglia di imparare, costanza e l\'abitudine a lavorare in squadra maturata in contesti molto diversi.' },
+];
+---
+
+<Layout title="CV · Leonardo Intagliata">
+	<main>
+		<PageHeader titolo="CV e cosa cerco" sottotitolo="Il lavoro che sto cercando e il mio curriculum, da leggere online o scaricare." />
+
+		<section class="mx-auto max-w-5xl px-4 sm:px-6">
+			<h2 class="text-2xl font-bold tracking-tight sm:text-3xl">Cosa cerco</h2>
+			<dl class="mt-6 grid gap-4 sm:grid-cols-2">
+				{
+					cosaCerco.map((voce) => (
+						<div class="rounded-xl border border-slate-800 bg-slate-900/70 p-6 backdrop-blur-sm">
+							<dt class="text-sm font-semibold tracking-wider text-blue-400 uppercase">{voce.etichetta}</dt>
+							<dd class="mt-2 text-slate-200">{voce.valore}</dd>
+						</div>
+					))
+				}
+			</dl>
+		</section>
+
+		<section class="mx-auto max-w-5xl px-4 pt-16 pb-16 sm:px-6">
+			<div class="flex flex-col gap-6 rounded-xl border border-blue-500/30 bg-blue-950/40 p-8 sm:flex-row sm:items-center sm:justify-between">
+				<div>
+					<h2 class="text-2xl font-bold tracking-tight">Il mio curriculum</h2>
+					<p class="mt-2 text-slate-300">Una pagina con formazione, esperienze, progetti e competenze.</p>
+				</div>
+				<div class="flex flex-wrap gap-3">
+					<a href={profilo.cv} target="_blank" rel="noopener" class="rounded-lg bg-blue-700 px-5 py-3 font-semibold text-white transition-colors hover:bg-blue-800">
+						Leggi nel browser
+					</a>
+					<a href={profilo.cv} download="CV_Leonardo_Intagliata.pdf" class="rounded-lg border border-slate-600 px-5 py-3 font-semibold transition-colors hover:bg-slate-800">
+						Scarica PDF
+					</a>
+				</div>
+			</div>
+		</section>
+	</main>
+</Layout>
